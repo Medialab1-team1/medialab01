@@ -3,6 +3,10 @@ import { useState } from "react";
 import { FocusOn } from "react-focus-on";
 import clsx from "clsx";
 
+// import contexts
+import { PatientContext } from "./contexts/PatientContext";
+import { DataContext } from "./contexts/DataContext";
+
 // import components
 import UploadPopup from "./components/UploadPopup/UploadPopup";
 
@@ -16,33 +20,37 @@ function App() {
     <div className="App">
       <header className="App-header">Let there be a menu here</header>
       <main className="App-main">
-        {/* request data to be uploaded when flag is set to true */}
-        {requestDataUpload && (
-          <div className="App-popup">
-            <FocusOn
-              enabled={requestDataUpload}
-              onEscapeKey={() => {
-                console.log(`escape`);
-                setRequestDataUpload((v) => !v);
-              }}
-              onClickOutside={() => {
-                console.log(`click`);
-                setRequestDataUpload((v) => !v);
-              }}
-              gapMode="mpadding"
-            >
-              <UploadPopup
-                active={requestDataUpload}
-                setRequestDataUpload={setRequestDataUpload}
-              />
-            </FocusOn>
-          </div>
-        )}
-        {/* rest of page follows here*/}
-        Let there be a dashboard here
-        <button onClick={() => setRequestDataUpload((v) => !v)}>
-          bring popup back
-        </button>
+        <PatientContext.Provider>
+          <DataContext.Provider>
+            {/* request data to be uploaded when flag is set to true */}
+            {requestDataUpload && (
+              <div className="App-popup">
+                <FocusOn
+                  enabled={requestDataUpload}
+                  onEscapeKey={() => {
+                    console.log(`escape`);
+                    setRequestDataUpload((v) => !v);
+                  }}
+                  onClickOutside={() => {
+                    console.log(`click`);
+                    setRequestDataUpload((v) => !v);
+                  }}
+                  gapMode="mpadding"
+                >
+                  <UploadPopup
+                    active={requestDataUpload}
+                    setRequestDataUpload={setRequestDataUpload}
+                  />
+                </FocusOn>
+              </div>
+            )}
+            {/* rest of page follows here*/}
+            Let there be a dashboard here
+            <button onClick={() => setRequestDataUpload((v) => !v)}>
+              bring popup back
+            </button>
+          </DataContext.Provider>
+        </PatientContext.Provider>
       </main>
       <footer className="App-footer">and I'm a footer</footer>
     </div>
