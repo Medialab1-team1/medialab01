@@ -1,5 +1,6 @@
-:root{
+:root {
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .App {
@@ -19,13 +20,38 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-main {
+  background-color: #282c34;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-footer {
+  min-height: 30vh;
+}
+
+.App-popup {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(00, 00, 00, 0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: ease-in-out 0.2s;
 }
 
 .App-link {
