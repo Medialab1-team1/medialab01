@@ -15,7 +15,6 @@ export default function UploadPopup({ setRequestDataUpload }) {
 
   function handleChange(event) {
     event.preventDefault();
-    console.log(event.target.files);
     const reader = new FileReader();
     const uploadedFiles = event.target.files;
     let i = 0;
@@ -51,6 +50,7 @@ export default function UploadPopup({ setRequestDataUpload }) {
       for (let blob of uploadedBlobs) {
         data.legs.left.knee.above.push(parseFile(blob));
       }
+      data.legs.left.knee.above = data.legs.left.knee.above.flat();
       setData(data);
     }
   }, [uploadedBlobs]);
