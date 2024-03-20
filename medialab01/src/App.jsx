@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import "./App.css";
-import UploadPopup from "./components/UploadPopup";
+import UploadPopup from "./components/UploadPopup/UploadPopup";
 
 function App() {
   const [requestDataUpload, setRequestDataUpload] = useState(true);
