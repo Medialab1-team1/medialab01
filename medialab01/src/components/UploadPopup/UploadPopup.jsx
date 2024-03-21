@@ -2,15 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import clsx from "clsx";
 import Papa from "papaparse";
 
-import { PatientContext } from "../../contexts/PatientContext";
 import { DataContext } from "../../contexts/DataContext";
+
+import InputData from "../InputData/InputData";
+import PatientForm from "../PatientForm/PatientForm";
 
 import styles from "./UploadPopup.module.css";
 
 export default function UploadPopup({ setRequestDataUpload }) {
   const { data, setData } = useContext(DataContext);
 
-  const patient = useContext(PatientContext);
   const [uploadedBlobs, setUploadedBlobs] = useState([]);
 
   function handleChange(event) {
@@ -72,30 +73,8 @@ export default function UploadPopup({ setRequestDataUpload }) {
       </div>
       <div className={clsx([styles.popupContentWrapper])}>
         <div className={clsx([styles.uploadContainer])}>
-          <form
-            className={clsx([styles.uploadForm])}
-            onSubmit={(event) => {
-              event.preventDefault();
-              setRequestDataUpload((v) => !v);
-            }}
-          >
-            <label>Upload sensordata</label>
-            <input
-              required
-              type="file"
-              id="sensordata"
-              name="sensordata"
-              accept=".csv"
-              onChange={(event) => handleChange(event)}
-              multiple
-            />
-            <input
-              type="submit"
-              name="submit"
-              value="meting uploaden"
-              aria-label="meting uploaden"
-            />
-          </form>
+           <InputData handleChange={handleChange} />
+           <PatientForm />
         </div>
       </div>
     </div>

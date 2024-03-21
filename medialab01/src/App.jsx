@@ -1,11 +1,10 @@
 // import
 import { useContext, useState } from "react";
 import { FocusOn } from "react-focus-on";
-import clsx from "clsx";
 
 //import contexts
 import { DataContextProvider } from "./contexts/DataContext";
-import { PatientContext } from "./contexts/PatientContext";
+import { PatientContextProvider } from "./contexts/PatientContext";
 
 // import components
 import UploadPopup from "./components/UploadPopup/UploadPopup";
@@ -21,7 +20,7 @@ function App() {
     <div className="App">
       <header className="App-header">Let there be a menu here</header>
       <main className="App-main">
-        <PatientContext.Provider>
+        <PatientContextProvider>
           <DataContextProvider>
             {/* request data to be uploaded when flag is set to true */}
             {requestDataUpload && (
@@ -47,7 +46,7 @@ function App() {
             </button>
             <DataChecker />
           </DataContextProvider>
-        </PatientContext.Provider>
+        </PatientContextProvider>
       </main>
       <footer className="App-footer">and I'm a footer</footer>
     </div>
