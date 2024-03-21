@@ -1,14 +1,15 @@
 // import
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FocusOn } from "react-focus-on";
 import clsx from "clsx";
 
-// import contexts
+//import contexts
+import { DataContextProvider } from "./contexts/DataContext";
 import { PatientContext } from "./contexts/PatientContext";
-import { DataContext } from "./contexts/DataContext";
 
 // import components
 import UploadPopup from "./components/UploadPopup/UploadPopup";
+import DataChecker from "./components/DataChecker/DataChecker";
 
 // import css
 import "./App.css";
@@ -21,26 +22,21 @@ function App() {
       <header className="App-header">Let there be a menu here</header>
       <main className="App-main">
         <PatientContext.Provider>
-          <DataContext.Provider>
+          <DataContextProvider>
             {/* request data to be uploaded when flag is set to true */}
             {requestDataUpload && (
               <div className="App-popup">
                 <FocusOn
                   enabled={requestDataUpload}
                   onEscapeKey={() => {
-                    console.log(`escape`);
                     setRequestDataUpload((v) => !v);
                   }}
                   onClickOutside={() => {
-                    console.log(`click`);
                     setRequestDataUpload((v) => !v);
                   }}
                   gapMode="mpadding"
                 >
-                  <UploadPopup
-                    active={requestDataUpload}
-                    setRequestDataUpload={setRequestDataUpload}
-                  />
+                  <UploadPopup setRequestDataUpload={setRequestDataUpload} />
                 </FocusOn>
               </div>
             )}
@@ -49,7 +45,8 @@ function App() {
             <button onClick={() => setRequestDataUpload((v) => !v)}>
               bring popup back
             </button>
-          </DataContext.Provider>
+            <DataChecker />
+          </DataContextProvider>
         </PatientContext.Provider>
       </main>
       <footer className="App-footer">and I'm a footer</footer>

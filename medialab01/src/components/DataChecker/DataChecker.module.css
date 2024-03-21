@@ -1,0 +1,6 @@
+.dataChecker {
+  color: red;
+  &.success {
+    color: green;
+  }
+}
