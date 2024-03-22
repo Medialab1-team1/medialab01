@@ -10,6 +10,7 @@ import { PatientContext } from "./contexts/PatientContext";
 // import components
 import UploadPopup from "./components/UploadPopup/UploadPopup";
 import DataChecker from "./components/DataChecker/DataChecker";
+import PieChartNeedle from "./components/PieChartNeedle/PieChartNeedle";
 
 // import css
 import "./App.css";
@@ -50,6 +51,7 @@ function App() {
             <DataChecker />
           </DataContextProvider>
         </PatientContext.Provider>
+        <PieChartNeedle/>
       </main>
       <footer className="App-footer">and I'm a footer</footer>
     </div>
