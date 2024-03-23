@@ -5,11 +5,17 @@ export const PatientContext = createContext();
 
 export const PatientContextProvider = ({ children }) => {
   const [patient, setPatient] = useState({
-      age: "0", // starting age of bracket
-      gender: "0", // unsure if this is needed
-      // add other needed info here
-      labels : []
-    
+    age: 0, // starting age of bracket
+    gender: "M", // unsure if this is needed
+    // add other needed info here
+    markers: [
+      // {
+      //   id: "", // index + type
+      //   name: "", // optional
+      //   type: "meal" | "poi", // type of marker medicine | meal | point of interest
+      //   time: 0, // date time object
+      // },
+    ],
   });
   return (
     <PatientContext.Provider value={{ patient, setPatient }}>

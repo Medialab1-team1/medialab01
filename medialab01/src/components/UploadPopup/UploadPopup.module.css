@@ -48,7 +48,7 @@
   .popupContentWrapper {
     display: flex;
     flex-direction: column;
-    padding: 20px 10px;
+    padding: 20px 20px;
     color: var(--color-black);
     background-color: var(--color-white);
 

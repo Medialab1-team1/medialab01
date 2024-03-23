@@ -5,28 +5,34 @@ import { PatientContext } from "../../contexts/PatientContext";
 
 import styles from "./PatientForm.module.css";
 
-export default function PatientForm({  }) {
-   const {patient, setPatient } = useContext(PatientContext);
+export default function PatientForm({}) {
+  const { patient, setPatient } = useContext(PatientContext);
+  const [age, setAge] = useState(patient.age);
 
-   function handleChange(e) {
-    console.log(e)
-   }
-   
-   return (
-   <>
-   <form className={clsx([styles.patientForm])} onSubmit={(e) => e.preventDefault()} id="patientForm" name="patientForm">
-    <h3>Info</h3>
-    <input type="number" value={patient.age} id="age" name="age" onChange={(e) => handleChange(e)}/>
-    <select id="gender" name="gender" onChange={(e) => handleChange(e)}>
+  function handleChange(event) {
+    if (event.target.name === "age") {
+      setAge(event.target.value);
+      patient.age = age;
+      setPatient(patient);
+      return;
+    }
+  }
+
+  return (
+    <>
+      <input
+        type="number"
+        value={age}
+        id="age"
+        name="age"
+        onChange={(event) => handleChange(event)}
+      />
+      <select id="gender" name="gender" onChange={(e) => handleChange(e)}>
         <option>M</option>
         <option>V</option>
-    </select>
+      </select>
 
-    <h3>Labels</h3>
-    
-
-    <input type="submit" value="Verzenden" onSubmit={(e) => e.preventDefault()}/>
-   </form>
+      <h3>Labels</h3>
     </>
-   )
+  );
 }

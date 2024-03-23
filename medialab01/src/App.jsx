@@ -1,14 +1,16 @@
 // import
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { FocusOn } from "react-focus-on";
 
 //import contexts
 import { DataContextProvider } from "./contexts/DataContext";
+
 import { PatientContextProvider } from "./contexts/PatientContext";
 
 // import components
 import UploadPopup from "./components/UploadPopup/UploadPopup";
 import DataChecker from "./components/DataChecker/DataChecker";
+import PatientChecker from "./components/PatientChecker/PatientChecker";
 
 // import css
 import "./App.css";
@@ -44,7 +46,9 @@ function App() {
             <button onClick={() => setRequestDataUpload((v) => !v)}>
               bring popup back
             </button>
+            {/* just some checkers to check if the contexts are getting updated properly */}
             <DataChecker />
+            <PatientChecker />
           </DataContextProvider>
         </PatientContextProvider>
       </main>
