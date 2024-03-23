@@ -43,12 +43,15 @@ function App() {
             )}
             {/* rest of page follows here*/}
             Let there be a dashboard here
-            <button onClick={() => setRequestDataUpload((v) => !v)}>
-              bring popup back
-            </button>
+            {/* dev stuff down here */}
             {/* just some checkers to check if the contexts are getting updated properly */}
             <DataChecker />
             <PatientChecker />
+            {/* button to bring the popup back */}
+            <button onClick={() => setRequestDataUpload((v) => !v)}>
+              bring popup back
+            </button>
+            {/* Delete dev stuff above */}
           </DataContextProvider>
         </PatientContextProvider>
       </main>

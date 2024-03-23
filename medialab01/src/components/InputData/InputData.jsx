@@ -56,7 +56,8 @@ export default function InputData() {
 
   // parsing read files
   function parseFile(blob) {
-    const parsedFile = Papa.parse(blob);
+    const parsedFile = Papa.parse(blob, { skipEmptyLines: "greedy" });
+    console.log(parsedFile);
     return parsedFile.data;
   }
 
