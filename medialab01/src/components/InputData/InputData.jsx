@@ -51,13 +51,12 @@ export default function InputData() {
         setUploadedBlobs(readFiles);
       }
     };
-    reader.onerror = () => console.log(reader.error);
+    reader.onerror = () => console.error(reader.error);
   }
 
   // parsing read files
   function parseFile(blob) {
     const parsedFile = Papa.parse(blob, { skipEmptyLines: "greedy" });
-    console.log(parsedFile);
     return parsedFile.data;
   }
 
