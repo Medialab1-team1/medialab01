@@ -4,6 +4,7 @@ import InputData from "../InputData/InputData";
 import PatientForm from "../PatientForm/PatientForm";
 
 import styles from "./UploadPopup.module.css";
+import MarkerForm from "../MarkerForm/MarkerForm";
 
 export default function UploadPopup({ setRequestDataUpload }) {
   return (
@@ -33,6 +34,7 @@ export default function UploadPopup({ setRequestDataUpload }) {
             <h3 className={clsx([styles.formHeader])}>Info</h3>
             <PatientForm />
             <h3 className={clsx([styles.formHeader])}>Markers</h3>
+            <MarkerForm />
             <input name="submit" type="submit" value={"Meting uploaden"} />
           </form>
         </div>
