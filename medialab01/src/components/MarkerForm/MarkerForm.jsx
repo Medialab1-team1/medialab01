@@ -85,6 +85,7 @@ export default function MarkerForm() {
       >
         <option value={"meal"}>Eten</option>
         <option value={"poi"}>Bookmark</option>
+        <option value={"medicine"}>Medicijn</option>
       </select>
       <button type="button" onClick={(e) => addMarker(e)}>
         Marker toevoegen
