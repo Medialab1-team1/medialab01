@@ -10,16 +10,20 @@ import { PatientContext } from "./contexts/PatientContext";
 // import components
 import UploadPopup from "./components/UploadPopup/UploadPopup";
 import DataChecker from "./components/DataChecker/DataChecker";
+import SvgHandler from "./components/SvgHandler";
 
 // import css
 import "./App.css";
+
+
 
 function App() {
   const [requestDataUpload, setRequestDataUpload] = useState(true);
 
   return (
     <div className="App">
-      <header className="App-header">Let there be a menu here</header>
+      <header className="App-header"><SvgHandler name ={"menu"} color={"#fff"}/>Let there be a menu here  </header>
+     
       <main className="App-main">
         <PatientContext.Provider>
           <DataContextProvider>
@@ -42,6 +46,7 @@ function App() {
             )}
             {/* rest of page follows here*/}
             Let there be a dashboard here
+            <SvgHandler name={"upload"} color={"#fff"}/>
             <button onClick={() => setRequestDataUpload((v) => !v)}>
               bring popup back
             </button>
