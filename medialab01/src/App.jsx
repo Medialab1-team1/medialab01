@@ -44,6 +44,7 @@ function App() {
               </div>
             )}
             {/* rest of page follows here*/}
+            <PieChartNeedle/>
             Let there be a dashboard here
             <button onClick={() => setRequestDataUpload((v) => !v)}>
               bring popup back
@@ -51,7 +52,6 @@ function App() {
             <DataChecker />
           </DataContextProvider>
         </PatientContext.Provider>
-        <PieChartNeedle/>
       </main>
       <footer className="App-footer">and I'm a footer</footer>
     </div>

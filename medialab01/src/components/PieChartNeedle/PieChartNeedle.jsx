@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 import { DataContext } from '../../contexts/DataContext';
 
 const RADIAN = Math.PI / 180;
-const data = [
+const chartData = [
   { name: 'A', value: 33, color: 'green' },
   { name: 'B', value: 34, color: 'orange' },
   { name: 'C', value: 33, color: 'red' },
@@ -13,9 +13,9 @@ const cy = 200;
 const iR = 50;
 const oR = 100;
 
-const needle = (value, data, cx, cy, iR, oR, color) => {
+const needle = (value, chartData, cx, cy, iR, oR, color) => {
   let total = 0; // needle total (should be 0?)
-  data.forEach((v) => {
+  chartData.forEach((v) => {
     total += v.value;
   });
   const ang = 180.0 * (1 - value / total);
@@ -39,8 +39,9 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
 };
 
 const PieChartNeedle = () => {
-  const { sensorData } = useContext(DataContext);
-  const value = sensorData.legs.left.knee.above.length;
+  const { data } = useContext(DataContext);
+  console.log("data" + data)
+  const value = data.legs.left.knee.above.length > 0 ? data.legs.left.knee.above.length : 0; 
 
   return (
     <PieChart width={400} height={500}>
@@ -48,7 +49,7 @@ const PieChartNeedle = () => {
         dataKey="value"
         startAngle={180}
         endAngle={0}
-        data={data}
+        data={chartData}
         cx={cx}
         cy={cy}
         innerRadius={iR}
@@ -56,11 +57,11 @@ const PieChartNeedle = () => {
         fill="#8884d8"
         stroke="none"
       >
-        {data.map((entry, index) => (
+        {chartData.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={entry.color} />
         ))}
       </Pie>
-      {value && needle(value, data, cx, cy, iR, oR, '#d0d000')}
+      {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
     </PieChart>
   );
 };
