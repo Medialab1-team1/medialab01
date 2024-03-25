@@ -1,25 +1,20 @@
-import React, { PureComponent } from 'react';
+import React, { useContext } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { DataContext } from '../../contexts/DataContext';
 
 const RADIAN = Math.PI / 180;
 const data = [
-  { name: 'A', value: 80, color: '#ff0000' },
-  { name: 'B', value: 45, color: '#00ff00' },
-  { name: 'C', value: 25, color: '#0000ff' },
+  { name: 'A', value: 33, color: 'green' },
+  { name: 'B', value: 34, color: 'orange' },
+  { name: 'C', value: 33, color: 'red' },
 ];
 const cx = 150;
 const cy = 200;
 const iR = 50;
 const oR = 100;
-let value = 50; // position of needle
-
-data.forEach((segment) => {
-  value += segment.value;
-});
 
 const needle = (value, data, cx, cy, iR, oR, color) => {
-  let total = 100; // how far the needle goes (i think)
+  let total = 0; // needle total (should be 0?)
   data.forEach((v) => {
     total += v.value;
   });
@@ -43,28 +38,31 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
   ];
 };
 
-export default class Example extends PureComponent {
-  render() {
-    return (
-      <PieChart width={400} height={500}>
-        <Pie
-          dataKey="value"
-          startAngle={180}
-          endAngle={0}
-          data={data}
-          cx={cx}
-          cy={cy}
-          innerRadius={iR}
-          outerRadius={oR}
-          fill="#8884d8"
-          stroke="none"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
-          ))}
-        </Pie>
-        {needle(value, data, cx, cy, iR, oR, '#d0d000')}
-      </PieChart>
-    );
-  }
-}
+const PieChartNeedle = () => {
+  const { sensorData } = useContext(DataContext);
+  const value = sensorData.legs.left.knee.above.length;
+
+  return (
+    <PieChart width={400} height={500}>
+      <Pie
+        dataKey="value"
+        startAngle={180}
+        endAngle={0}
+        data={data}
+        cx={cx}
+        cy={cy}
+        innerRadius={iR}
+        outerRadius={oR}
+        fill="#8884d8"
+        stroke="none"
+      >
+        {data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={entry.color} />
+        ))}
+      </Pie>
+      {value && needle(value, data, cx, cy, iR, oR, '#d0d000')}
+    </PieChart>
+  );
+};
+
+export default PieChartNeedle;
