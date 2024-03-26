@@ -1,6 +1,5 @@
 // import
 import React, { useState } from "react";
-import { useState } from "react";
 import { FocusOn } from "react-focus-on";
 
 //import contexts
@@ -9,7 +8,6 @@ import { DataContextProvider } from "./contexts/DataContext";
 import { PatientContextProvider } from "./contexts/PatientContext";
 
 // import components
-import UploadPopup from "./components/UploadPopup";
 import GraphBox from "./components/GraphBox";
 import UploadPopup from "./components/UploadPopup/UploadPopup";
 import DataChecker from "./components/DataChecker/DataChecker";
