@@ -1,8 +1,25 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 // Context to provide the patient info to all components that need it.
-export const PatientContext = createContext({
-  age: "0", // starting age of bracket
-  gender: "0", // unsure if this is needed
-  // add other needed info here
-});
+export const PatientContext = createContext();
+
+export const PatientContextProvider = ({ children }) => {
+  const [patient, setPatient] = useState({
+    age: 0, // starting age of bracket
+    gender: "M", // unsure if this is needed
+    // add other needed info here
+    markers: [
+      // {
+      //   id: "", // index + type
+      //   name: "", // optional
+      //   type: "meal" | "poi", // type of marker medicine | meal | point of interest
+      //   time: 0, // date time object
+      // },
+    ],
+  });
+  return (
+    <PatientContext.Provider value={{ patient, setPatient }}>
+      {children}
+    </PatientContext.Provider>
+  );
+};
