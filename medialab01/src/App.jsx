@@ -10,10 +10,13 @@ import { PatientContextProvider } from "./contexts/PatientContext";
 // import components
 import UploadPopup from "./components/UploadPopup/UploadPopup";
 import DataChecker from "./components/DataChecker/DataChecker";
+import PieChartNeedle from "./components/PieChartNeedle/PieChartNeedle";
 import PatientChecker from "./components/PatientChecker/PatientChecker";
 
 // import css
 import "./App.css";
+
+// Help
 
 function App() {
   const [requestDataUpload, setRequestDataUpload] = useState(true);
@@ -42,6 +45,7 @@ function App() {
               </div>
             )}
             {/* rest of page follows here*/}
+            <PieChartNeedle/>
             Let there be a dashboard here
             {/* dev stuff down here */}
             {/* just some checkers to check if the contexts are getting updated properly */}
