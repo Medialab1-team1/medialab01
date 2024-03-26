@@ -12,18 +12,20 @@ import UploadPopup from "./components/UploadPopup/UploadPopup";
 import DataChecker from "./components/DataChecker/DataChecker";
 import PieChartNeedle from "./components/PieChartNeedle/PieChartNeedle";
 import PatientChecker from "./components/PatientChecker/PatientChecker";
+import SvgHandler from "./components/SvgHandler";
 
 // import css
 import "./App.css";
 
-// Help
+
 
 function App() {
   const [requestDataUpload, setRequestDataUpload] = useState(true);
 
   return (
     <div className="App">
-      <header className="App-header">Let there be a menu here</header>
+      <header className="App-header"><SvgHandler name ={"menu"} color={"#fff"}/>Let there be a menu here  </header>
+     
       <main className="App-main">
         <PatientContextProvider>
           <DataContextProvider>
@@ -52,6 +54,7 @@ function App() {
             <DataChecker />
             <PatientChecker />
             {/* button to bring the popup back */}
+            <SvgHandler name={"upload"} color={"#fff"}/>
             <button onClick={() => setRequestDataUpload((v) => !v)}>
               bring popup back
             </button>
