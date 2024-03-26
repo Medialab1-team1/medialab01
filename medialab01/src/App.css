@@ -1,3 +1,27 @@
+:root {
+  overflow-x: hidden;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  scroll-behavior: smooth;
+
+  /* colors */
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* custom colors */
+  --color-blue: #29298a;
+
+  /* util styling variables */
+  --border-radius: 20px;
+  --box-shadow: 0px 3px 3px 2px #3d3d3d80;
+
+  button {
+    cursor: pointer;
+  }
+}
+
 .App {
   text-align: center;
 }
@@ -15,13 +39,38 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-main {
+  background-color: #282c34;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-footer {
+  min-height: 30vh;
+}
+
+.App-popup {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(00, 00, 00, 0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: ease-in-out 0.2s;
 }
 
 .App-link {

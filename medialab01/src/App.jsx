@@ -1,9 +1,21 @@
 // import
 import React, { useState } from "react";
+import { useState } from "react";
+import { FocusOn } from "react-focus-on";
+
+//import contexts
+import { DataContextProvider } from "./contexts/DataContext";
+
+import { PatientContextProvider } from "./contexts/PatientContext";
 
 // import components
 import UploadPopup from "./components/UploadPopup";
 import GraphBox from "./components/GraphBox";
+import UploadPopup from "./components/UploadPopup/UploadPopup";
+import DataChecker from "./components/DataChecker/DataChecker";
+import PieChartNeedle from "./components/PieChartNeedle/PieChartNeedle";
+import PatientChecker from "./components/PatientChecker/PatientChecker";
+import SvgHandler from "./components/SvgHandler";
 
 // import css
 import "./App.css";
@@ -13,7 +25,8 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">Let there be a menu here</header>
+      <header className="App-header"><SvgHandler name ={"menu"} color={"#fff"}/>Let there be a menu here  </header>
+
       <main className="App-main">
         {/* request data to be uploaded when flag is set to true */}
         {requestDataUpload && <UploadPopup />}
@@ -21,8 +34,41 @@ function App() {
         {/*  temp graph not in component cuz shits giving me headaches*/}
           <h1>Simple Line chart</h1>
           <GraphBox />
-            </main>
-      <footer className="App-footer">and I'm a footer</footer>
+        <PatientContextProvider>
+          <DataContextProvider>
+            {/* request data to be uploaded when flag is set to true */}
+            {requestDataUpload && (
+              <div className="App-popup">
+                <FocusOn
+                  enabled={requestDataUpload}
+                  onEscapeKey={() => {
+                    setRequestDataUpload((v) => !v);
+                  }}
+                  onClickOutside={() => {
+                    setRequestDataUpload((v) => !v);
+                  }}
+                  gapMode="mpadding"
+                >
+                  <UploadPopup setRequestDataUpload={setRequestDataUpload} />
+                </FocusOn>
+              </div>
+            )}
+            {/* rest of page follows here*/}
+            <PieChartNeedle/>
+            Let there be a dashboard here
+            {/* dev stuff down here */}
+            {/* just some checkers to check if the contexts are getting updated properly */}
+            <DataChecker />
+            <PatientChecker />
+            {/* button to bring the popup back */}
+            <SvgHandler name={"upload"} color={"#fff"}/>
+            <button onClick={() => setRequestDataUpload((v) => !v)}>
+              bring popup back
+            </button>
+            {/* Delete dev stuff above */}
+          </DataContextProvider>
+        </PatientContextProvider>
+      </main>
     </div>
   );
 }
