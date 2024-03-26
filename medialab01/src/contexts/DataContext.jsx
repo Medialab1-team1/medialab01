@@ -75,6 +75,11 @@ export const DataContextProvider = ({ children }) => {
         foot: [],
       },
     },
+    meta: {
+      id: "", // start + length
+      start: 0, // date time string
+      length: 0, // # lines / measurements per second assumed to be 32
+    },
   });
   return (
     <DataContext.Provider value={{ data, setData }}>
