@@ -13,6 +13,7 @@ import DataChecker from "./components/DataChecker/DataChecker";
 
 // import css
 import "./App.css";
+import GraphBox from "./components/GraphBox/GraphBox";
 
 function App() {
   const [requestDataUpload, setRequestDataUpload] = useState(true);
@@ -41,6 +42,7 @@ function App() {
               </div>
             )}
             {/* rest of page follows here*/}
+              <GraphBox />
             Let there be a dashboard here
             <button onClick={() => setRequestDataUpload((v) => !v)}>
               bring popup back
