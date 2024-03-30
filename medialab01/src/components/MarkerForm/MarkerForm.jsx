@@ -42,7 +42,8 @@ export default function MarkerForm() {
   }
 
   function addMarker(event) {
-    setMarkers(markers.push(newMarker));
+    markers.push(newMarker)
+    setMarkers(markers);
     setNewMarker(emptyMarker());
     console.log(markers, newMarker);
   }
@@ -69,7 +70,7 @@ export default function MarkerForm() {
       />
       <label htmlFor="marker-time">tijd</label>
       <input
-        type="datetime-local"
+        type="time"
         name="marker-time"
         id="marker-time"
         value={newMarker.time}

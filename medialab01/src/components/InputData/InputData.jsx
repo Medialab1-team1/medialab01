@@ -11,7 +11,7 @@ export default function InputData() {
 
   const [uploadedBlobs, setUploadedBlobs] = useState([]);
 
-  const [startDate, setStartDate] = useState(getDateString());
+  const [startDate, setStartDate] = useState(getTimeString());
 
   const reader = new FileReader();
 
@@ -29,6 +29,9 @@ export default function InputData() {
 
   function onDateChange(event) {
     setStartDate(event.target.value);
+    data.meta.start = startDate;
+    setData(data)
+    
   }
 
   function onFilesChange(event) {
@@ -60,9 +63,9 @@ export default function InputData() {
     return parsedFile.data;
   }
 
-  function getDateString() {
-    const date = new Date().toISOString();
-    return date.substring(0, date.length - 8);
+  function getTimeString() {
+    const time = new Date().toTimeString();
+    return time.slice(0,5)
   }
 
   useEffect(() => {
@@ -102,12 +105,12 @@ export default function InputData() {
         Begintijd van meting
       </label>
       <input
-        type="datetime-local"
+        type="time"
         id="start-time"
         name="start-time"
         value={startDate && startDate}
-        min="2024-01-01T00:00"
-        max="2424-12-31T23:59"
+        min="00:00"
+        max="23:59"
         onChange={(event) => handleChange(event)}
       />
     </>
