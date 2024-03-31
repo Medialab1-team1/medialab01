@@ -40,6 +40,7 @@
       background: var(--color-white);
       border: none;
       font-weight: 700;
+      color: black;
 
       &:hover {
         background-color: #ffbbbb;
@@ -63,5 +64,6 @@
         gap: 5px;
       }
     }
+    
   }
 }

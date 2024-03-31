@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { DataContext } from '../../contexts/DataContext';
+import styles from "./PieChartNeedle.module.css";
+import clsx from "clsx";
+
 
 const RADIAN = Math.PI / 180;
 const chartData = [
@@ -44,25 +47,32 @@ const PieChartNeedle = () => {
   const value = data.legs.left.knee.above.length > 0 ? data.legs.left.knee.above.length : 0; 
 
   return (
-    <PieChart width={400} height={500}>
-      <Pie
-        dataKey="value"
-        startAngle={180}
-        endAngle={0}
-        data={chartData}
-        cx={cx}
-        cy={cy}
-        innerRadius={iR}
-        outerRadius={oR}
-        fill="#8884d8"
-        stroke="none"
-      >
-        {chartData.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={entry.color} />
-        ))}
-      </Pie>
-      {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
-    </PieChart>
+    <>
+    <div className={clsx([styles.chartContainer])}>
+      <h1 className={clsx([styles.title])}>Activity Chart</h1>
+        <PieChart width={400} height={300}>
+          <Pie
+            dataKey="value"
+            startAngle={180}
+            endAngle={0}
+            data={chartData}
+            cx={cx}
+            cy={cy}
+            innerRadius={iR}
+            outerRadius={oR}
+            fill="#8884d8"
+            stroke="none"
+          >
+            {chartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
+          {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
+        </PieChart>
+    </div>
+      
+    </>
+   
   );
 };
 

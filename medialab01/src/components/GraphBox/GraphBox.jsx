@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Line, LineChart, Tooltip, XAxis, YAxis, Legend } from "recharts";
 import { DataContext } from "../../contexts/DataContext";
+import styles from "./GraphBox.module.css";
+import clsx from "clsx";
 
 const GraphBox = () => {
     const { data } = useContext(DataContext);
@@ -12,14 +14,14 @@ const GraphBox = () => {
     }));
 
     return (
-        <div>
-            <h1>Simple Line chart</h1>
+        <div className={clsx([styles.chartContainer])}>
+      <h1 className={clsx([styles.title])}>Line Chart</h1>
             <LineChart width={1000} height={300} data={chartData}>
                 <XAxis dataKey="index" />
                 <YAxis />
                 <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="value" stroke="green" />
+                {/* <Legend color="#29298a"/> */}
+                <Line type="monotone" dataKey="value" stroke="#29298a" />
             </LineChart>
         </div>
     );

@@ -1,3 +1,8 @@
+html, body{
+  background-color: var(--color-light-gray);
+  font-family: Arial, Helvetica, sans-serif
+}
+
 :root {
   overflow-x: hidden;
   box-sizing: border-box;
@@ -8,18 +13,116 @@
 
   /* colors */
   --color-white: #fff;
-  --color-black: #000;
+  --color-light-gray: #e4e4e4;
+  --color-dark-gray: #f5f3f544;
+  --color-black: #282c34;
 
   /* custom colors */
   --color-blue: #29298a;
+  --color-sky-blue: #63cae3;
 
   /* util styling variables */
   --border-radius: 20px;
   --box-shadow: 0px 3px 3px 2px #3d3d3d80;
 
-  button {
+  button, input[type=submit] {
     cursor: pointer;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: var(--color-sky-blue);
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    color: white;
   }
+  
+  button:hover, input[type=submit]:hover {
+    background-color: #3ed7fd;
+  }
+}
+
+.logo-container {
+  z-index: 9999;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding-bottom: 8px;
+}
+
+
+.sidebar{
+  z-index: 0;
+  height: 100%;
+  width: 15vw;
+  position: fixed;
+  padding-left: 20px;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom right, var(--color-blue)60%, #4646c2);
+  overflow-x: hidden;
+}
+
+.sidebar a{
+  display: flex;
+  color: white;
+  padding-bottom: 6px;
+  text-decoration: none;
+  text-align: left;
+  font-weight: 500;
+}
+
+.sidebar a:hover{
+  font-weight: bold;
+}
+
+.sidebar a, 
+.sidebar button { 
+  display: flex;
+  align-items: center; 
+  color: white;
+  text-decoration: none;
+  text-align: left;
+  font-weight: 500;
+}
+
+.sidebar button{
+  margin-top: 20px;
+}
+
+.sidebar a:hover { 
+  font-weight: bold;
+}
+
+.footer-items {
+  position: absolute;
+  font-size: small;
+  margin-bottom: 5vh;
+  bottom: 0;
+
+}
+
+.footer-items ul,p,span {
+  list-style-type: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-items p {
+  font-size: medium;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.footer-items span{
+  font-style: italic;
+}
+
+.footer-items ul li {
+  color: white;
+  margin-bottom: 5px;
 }
 
 .App {
@@ -38,7 +141,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--color-blue);
   min-height: 10vh;
   display: flex;
   flex-direction: row;
@@ -46,10 +149,11 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin-bottom: 10vh;
 }
 
 .App-main {
-  background-color: #282c34;
+  background-color: var(--color-light-gray);
   min-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -57,10 +161,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-footer {
-  min-height: 30vh;
 }
 
 .App-popup {
@@ -76,6 +176,39 @@
 .App-link {
   color: #61dafb;
 }
+.App-graph-container{
+  background: var(--color-white);
+  margin-bottom: 5vh;
+  margin-left: 10vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60vw;
+  border-radius: 10px;
+  box-shadow: 0px 3px 3px 2px #3d3d3d80;
+}
+
+form ,label{
+  font-size: medium;
+}
+
+form h3{
+  font-size: large;
+}
+
+input[type=text],input[type=number],input[type=datetime-local], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+
 
 @keyframes App-logo-spin {
   from {

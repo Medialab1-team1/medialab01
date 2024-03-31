@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FocusOn } from "react-focus-on";
 import clsx from "clsx";
 
+
 //import contexts
 import { DataContextProvider } from "./contexts/DataContext";
 
@@ -19,14 +20,40 @@ import SvgHandler from "./components/SvgHandler";
 import "./App.css";
 import GraphBox from "./components/GraphBox/GraphBox";
 
-
-
 function App() {
   const [requestDataUpload, setRequestDataUpload] = useState(true);
 
   return (
     <div className="App">
-      <header className="App-header"><SvgHandler name ={"menu"} color={"#fff"}/>Let there be a menu here  </header>
+      <header className="App-header">
+      
+        <div className="sidebar">
+          <div class="logo-container">
+            <a href="/">
+              <img src="/logo_dashboard.png" alt="Logo" class="logo-image" />
+            </a>
+          </div>
+          <a href="/">Line Chart</a>
+          <a href="/">Activity Chart</a>
+          <button onClick={() => setRequestDataUpload((v) => !v)}>
+            <SvgHandler name={"upload"} color={"#fff"} />
+            Bring popup back
+          </button>
+
+          <div className="footer-items">
+            <p>Made by:</p>
+            <ul>
+              <li>Daan van Rossum</li>
+              <li>Kevin Molendijk</li>
+              <li>Pim van Milt</li>
+              <li>Sasha Salmon</li>
+              <li>Wessel van Beek</li>
+              <span>CMGT 2024</span>
+            </ul>
+            
+          </div>
+        </div>
+      </header>
 
       <main className="App-main">
         <PatientContextProvider>
@@ -49,23 +76,22 @@ function App() {
               </div>
             )}
             {/* rest of page follows here*/}
-            <PieChartNeedle/>
+            <div className="App-graph-container">
               <GraphBox />
-            Let there be a dashboard here
+            </div>
+            <div className="App-graph-container">
+              <PieChartNeedle />
+            </div>
             {/* dev stuff down here */}
             {/* just some checkers to check if the contexts are getting updated properly */}
-            <DataChecker />
-            <PatientChecker />
+            {/* <DataChecker />
+            <PatientChecker /> */}
             {/* button to bring the popup back */}
-            <SvgHandler name={"upload"} color={"#fff"}/>
-            <button onClick={() => setRequestDataUpload((v) => !v)}>
-              bring popup back
-            </button>
+
             {/* Delete dev stuff above */}
           </DataContextProvider>
         </PatientContextProvider>
       </main>
-      <footer className="App-footer">and I'm a footer</footer>
     </div>
   );
 }
