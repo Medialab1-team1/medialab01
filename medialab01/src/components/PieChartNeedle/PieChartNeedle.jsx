@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { DataContext } from '../../contexts/DataContext';
+import { ActivityContext } from "../../contexts/ActivityContext";
+import { DifferenceContext } from "../../contexts/DifferenceContext";
 
 const RADIAN = Math.PI / 180;
 const chartData = [
-  { name: 'A', value: 33, color: 'green' },
-  { name: 'B', value: 34, color: 'orange' },
-  { name: 'C', value: 33, color: 'red' },
+  { name: 'A', value: 0.2, color: 'red' },
+  { name: 'B', value: 0.8, color: 'orange' },
+  { name: 'C', value: 1, color: 'green' },
 ];
 const cx = 150;
 const cy = 200;
@@ -41,7 +43,33 @@ const needle = (value, chartData, cx, cy, iR, oR, color) => {
 const PieChartNeedle = () => {
   const { data } = useContext(DataContext);
   console.log("data" + data)
-  const value = data.legs.left.knee.above.length > 0 ? data.legs.left.knee.above.length : 0; 
+
+  const { activity } = useContext(ActivityContext);
+  const { difference } = useContext(DifferenceContext);
+
+  // Extract the hour array
+  const hourArray = activity?.categorised?.legs?.left?.knee?.above?.hour ?? [];
+
+  // Flatten the nested array and turn it into numbers
+  const flattenedHours = hourArray.flat().map(Number);
+
+  // Sum up all the numbers
+  const totalHours = flattenedHours.reduce((acc, curr) => acc + curr, 0);
+
+  const averageHours = totalHours / 3;
+
+    // Extract the minute array
+    const minuteArray = activity?.categorised?.legs?.left?.knee?.above?.minute ?? [];
+
+    // Flatten the nested array and turn it into numbers
+    const flattenedMinutes = minuteArray.flat().map(Number);
+  
+    // Sum up all the numbers
+    const totalMinutes = flattenedMinutes.reduce((acc, curr) => acc + curr, 0);
+  
+    const averageMinutes = totalMinutes / 3;
+
+    const value = averageHours > 0 ? averageHours : 0; 
 
   return (
     <PieChart width={400} height={500}>
@@ -62,6 +90,8 @@ const PieChartNeedle = () => {
         ))}
       </Pie>
       {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
+      {console.log("hours in pie:", averageHours)}
+      {console.log("minutes in pie:", averageMinutes)}
     </PieChart>
   );
 };
