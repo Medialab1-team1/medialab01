@@ -179,18 +179,12 @@ export default function InputData() {
         all[4][Math.floor(all[4].length * 0.2)],
         all[4][Math.floor(all[4].length * 0.7)],
       ];
-      console.log(
-        "tresholds: low:",
-        activity.meta.tresholds.low,
-        "high:",
-        activity.meta.tresholds.high
-      );
     }
-    console.log(input);
+
     categorisedOutput.second = assignCategories(input.second);
     categorisedOutput.minute = assignCategories(input.minute);
     categorisedOutput.hour = assignCategories(input.hour);
-    console.log(categorisedOutput);
+
     return categorisedOutput;
     // run through all averages and assign category based on tresholds
     function assignCategories(input) {
