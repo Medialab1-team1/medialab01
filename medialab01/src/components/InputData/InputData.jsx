@@ -166,6 +166,7 @@ export default function InputData() {
       all.map((array, i) => {
         all[i] = array.sort();
       });
+
       [activity.meta.tresholds.low[2], activity.meta.tresholds.high[2]] = [
         all[2][Math.floor(all[2].length * 0.2)],
         all[2][Math.floor(all[2].length * 0.7)],

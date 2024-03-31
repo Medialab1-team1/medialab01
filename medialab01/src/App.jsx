@@ -39,7 +39,7 @@ function App() {
                 onClickOutside={() => {
                   setRequestDataUpload((v) => !v);
                 }}
-                gapMode="mpadding"
+                gapMode="padding"
               >
                 <UploadPopup setRequestDataUpload={setRequestDataUpload} />
               </FocusOn>
