@@ -47,7 +47,6 @@ function App() {
           )}
           {/* rest of page follows here*/}
           <PieChartNeedle />
-          <GraphBox />
           Let there be a dashboard here
           {/* dev stuff down here */}
           {/* just some checkers to check if the contexts are getting updated properly */}

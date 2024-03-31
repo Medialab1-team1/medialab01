@@ -47,29 +47,29 @@ const PieChartNeedle = () => {
   const { activity } = useContext(ActivityContext);
   const { difference } = useContext(DifferenceContext);
 
-  // Extract the hour array
+  // Extract the hour array and flatten it
   const hourArray = activity?.categorised?.legs?.left?.knee?.above?.hour ?? [];
-
-  // Flatten the nested array and turn it into numbers
   const flattenedHours = hourArray.flat().map(Number);
 
-  // Sum up all the numbers
-  const totalHours = flattenedHours.reduce((acc, curr) => acc + curr, 0);
+  // Extract the minute array and flatten it
+  const minuteArray = activity?.categorised?.legs?.left?.knee?.above?.minute ?? [];
+  const flattenedMinutes = minuteArray.flat().map(Number);
 
-  const averageHours = totalHours / 3;
+  // Total of all intensity numbers in minute array
+  const filteredMinutes = flattenedMinutes.slice(2);
+  const totalMinutes = filteredMinutes.reduce((acc, curr) => acc + curr, 0);
 
-    // Extract the minute array
-    const minuteArray = activity?.categorised?.legs?.left?.knee?.above?.minute ?? [];
+  // Remove first 2 as they are always 0 and calculate total intensity
+  const filteredHours = flattenedHours.slice(2);
+  const totalIntensity = filteredHours.reduce((acc, curr) => acc + curr, 0);
 
-    // Flatten the nested array and turn it into numbers
-    const flattenedMinutes = minuteArray.flat().map(Number);
-  
-    // Sum up all the numbers
-    const totalMinutes = flattenedMinutes.reduce((acc, curr) => acc + curr, 0);
-  
-    const averageMinutes = totalMinutes / 3;
+  // Calculate the average intensity level (for hours)
+  const averageIntensity = totalIntensity / filteredHours.length;
 
-    const value = averageHours > 0 ? averageHours : 0; 
+  // Round the average
+  const roundedAverageIntensity = Math.round(averageIntensity);
+
+  const value = roundedAverageIntensity > 0 ? roundedAverageIntensity : 0;
 
   return (
     <PieChart width={400} height={500}>
@@ -90,8 +90,9 @@ const PieChartNeedle = () => {
         ))}
       </Pie>
       {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
-      {console.log("hours in pie:", averageHours)}
-      {console.log("minutes in pie:", averageMinutes)}
+      {console.log("total *hours intensity:", totalIntensity)}
+      {console.log("total minutes intensity:", totalMinutes)}
+      {console.log("avg intensity *hours:", roundedAverageIntensity)}
     </PieChart>
   );
 };
