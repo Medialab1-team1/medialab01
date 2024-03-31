@@ -61,10 +61,13 @@ const PieChartNeedle = () => {
 
   // Remove first 2 as they are always 0 and calculate total intensity
   const filteredHours = flattenedHours.slice(2);
-  const totalIntensity = filteredHours.reduce((acc, curr) => acc + curr, 0);
+  const totalHours = filteredHours.reduce((acc, curr) => acc + curr, 0);
 
   // Calculate the average intensity level (for hours)
-  const averageIntensity = totalIntensity / filteredHours.length;
+  const averageIntensity = totalHours / filteredHours.length;
+
+    // Calculate the average intensity level (for minutes)
+  const averageIntensityMinutes = totalMinutes / filteredMinutes.length;
 
   // Round the average
   const roundedAverageIntensity = Math.round(averageIntensity);
@@ -90,9 +93,9 @@ const PieChartNeedle = () => {
         ))}
       </Pie>
       {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
-      {console.log("total *hours intensity:", totalIntensity)}
+      {console.log("total hours intensity:", totalHours)}
       {console.log("total minutes intensity:", totalMinutes)}
-      {console.log("avg intensity *hours:", roundedAverageIntensity)}
+      {console.log("avg intensity:", roundedAverageIntensity)}
     </PieChart>
   );
 };
