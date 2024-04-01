@@ -15,9 +15,9 @@ const GraphBox = () => {
       activity?.averages?.legs?.left?.knee?.above?.minute?.map(
         (entry, index) => ({
           index: index, // X-axis based on the index of the array
-          valueA: parseFloat(entry[2]),
-          valueB: parseFloat(entry[3]),
-          valueC: parseFloat(entry[4]), // Use the third data entry for the graph
+          yaw: parseFloat(entry[2]),
+          pitch: parseFloat(entry[3]),
+          roll: parseFloat(entry[4]), // Use the third data entry for the graph
         })
       );
     setChartData(tempChartData);
@@ -41,21 +41,21 @@ const GraphBox = () => {
             {/* <Legend color="#29298a"/> */}
             <Line
               type="monotone"
-              dataKey="valueA"
+              dataKey="yaw"
               stroke="#29298a"
               strokeWidth={3}
               dot={{ r: 4 }}
             />
             <Line
               type="monotone"
-              dataKey="valueB"
+              dataKey="pitch"
               stroke="#63cae3"
               strokeWidth={3}
               dot={{ r: 4 }}
             />
             <Line
               type="monotone"
-              dataKey="valueC"
+              dataKey="roll"
               stroke="#282c34"
               strokeWidth={3}
               dot={{ r: 4 }}
