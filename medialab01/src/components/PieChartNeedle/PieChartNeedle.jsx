@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, Label } from "recharts";
 import { DataContext } from "../../contexts/DataContext";
 import styles from "./PieChartNeedle.module.css";
 import clsx from "clsx";
@@ -9,9 +9,9 @@ import { DifferenceContext } from "../../contexts/DifferenceContext";
 
 const RADIAN = Math.PI / 180;
 const chartData = [
-  { name: "A", value: 0.2, color: "red" },
-  { name: "B", value: 0.8, color: "orange" },
-  { name: "C", value: 1, color: "green" },
+  { name: "A", value: 0.2, color: "#ff1717" },
+  { name: "B", value: 0.8, color: "#ffcd17" },
+  { name: "C", value: 1, color: "#2dbf00" },
 ];
 const cx = 200;
 const cy = 200;
