@@ -35,7 +35,15 @@ export default function UploadPopup({ setRequestDataUpload }) {
             <PatientForm />
             <h3 className={clsx([styles.formHeader])}>Markers</h3>
             <MarkerForm />
-            <input name="submit" type="submit" value={"Meting uploaden"} />
+            <input
+              name="submit"
+              type="submit"
+              value={"Meting uploaden"}
+              onClick={() => {
+                console.log("submit");
+                setRequestDataUpload((v) => !v);
+              }}
+            />
           </form>
         </div>
       </div>

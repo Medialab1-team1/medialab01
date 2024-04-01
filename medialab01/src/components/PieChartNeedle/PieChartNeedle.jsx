@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import { PieChart, Pie, Cell } from 'recharts';
-import { DataContext } from '../../contexts/DataContext';
+import React, { useContext } from "react";
+import { PieChart, Pie, Cell } from "recharts";
+import { DataContext } from "../../contexts/DataContext";
 import styles from "./PieChartNeedle.module.css";
 import clsx from "clsx";
 
@@ -9,11 +9,11 @@ import { DifferenceContext } from "../../contexts/DifferenceContext";
 
 const RADIAN = Math.PI / 180;
 const chartData = [
-  { name: 'A', value: 0.2, color: 'red' },
-  { name: 'B', value: 0.8, color: 'orange' },
-  { name: 'C', value: 1, color: 'green' },
+  { name: "A", value: 0.2, color: "red" },
+  { name: "B", value: 0.8, color: "orange" },
+  { name: "C", value: 1, color: "green" },
 ];
-const cx = 150;
+const cx = 200;
 const cy = 200;
 const iR = 50;
 const oR = 100;
@@ -39,13 +39,17 @@ const needle = (value, chartData, cx, cy, iR, oR, color) => {
 
   return [
     <circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
-    <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />,
+    <path
+      d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`}
+      stroke="#none"
+      fill={color}
+    />,
   ];
 };
 
 const PieChartNeedle = () => {
   const { data } = useContext(DataContext);
-  console.log("data" + data)
+  console.log("data" + data);
 
   const { activity } = useContext(ActivityContext);
   const { difference } = useContext(DifferenceContext);
@@ -55,7 +59,8 @@ const PieChartNeedle = () => {
   const flattenedHours = hourArray.flat().map(Number);
 
   // Extract the minute array and flatten it
-  const minuteArray = activity?.categorised?.legs?.left?.knee?.above?.minute ?? [];
+  const minuteArray =
+    activity?.categorised?.legs?.left?.knee?.above?.minute ?? [];
   const flattenedMinutes = minuteArray.flat().map(Number);
 
   // Total of all intensity numbers in minute array
@@ -69,7 +74,7 @@ const PieChartNeedle = () => {
   // Calculate the average intensity level (for hours)
   const averageIntensity = totalHours / filteredHours.length;
 
-    // Calculate the average intensity level (for minutes)
+  // Calculate the average intensity level (for minutes)
   const averageIntensityMinutes = totalMinutes / filteredMinutes.length;
 
   // Round the average
@@ -79,8 +84,8 @@ const PieChartNeedle = () => {
 
   return (
     <>
-    <div className={clsx([styles.chartContainer])}>
-      <h1 className={clsx([styles.title])}>Activity Chart</h1>
+      <div className={clsx([styles.chartContainer])}>
+        <h1 className={clsx([styles.title])}>Activity Chart</h1>
         <PieChart width={400} height={300}>
           <Pie
             dataKey="value"
@@ -98,12 +103,10 @@ const PieChartNeedle = () => {
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
-          {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
+          {value && needle(value, chartData, cx, cy, iR, oR, "#d0d000")}
         </PieChart>
-    </div>
-      
+      </div>
     </>
-   
   );
 };
 
