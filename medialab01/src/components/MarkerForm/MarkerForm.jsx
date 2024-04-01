@@ -63,7 +63,7 @@ export default function MarkerForm() {
         value={newMarker.name}
         onChange={(event) => handleChange(event)}
       />
-      <label htmlFor="marker-time">tijd</label>
+      <label htmlFor="marker-time">Tijd</label>
       <input
         type="time"
         name="marker-time"
@@ -72,7 +72,7 @@ export default function MarkerForm() {
         min={newMarker.time}
         onChange={(event) => handleChange(event)}
       />
-      <label htmlFor="marker-type">categorie</label>
+      <label htmlFor="marker-type">Categorie</label>
       <select
         name="marker-type"
         id="marker-type"
