@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import clsx from "clsx";
+import { useContext, useState } from "react";
+// import clsx from "clsx";
 
 import { PatientContext } from "../../contexts/PatientContext";
 
-import styles from "./PatientForm.module.css";
+// import styles from "./PatientForm.module.css";
 
 export default function PatientForm() {
   const { patient, setPatient } = useContext(PatientContext);
@@ -11,7 +11,6 @@ export default function PatientForm() {
   const [gender, setGender] = useState(patient.gender);
 
   function handleChange(event) {
-    console.log(event.target.name, event.target.value);
     if (event.target.name === "age") {
       onAgeChange(event);
     }
@@ -21,18 +20,16 @@ export default function PatientForm() {
   }
 
   function onAgeChange(event) {
-    console.log(event.target);
     setAge(event.target.value);
-    patient.age = age;
-    setPatient(patient);
+    patient.age = event.target.value;
+    setPatient({ ...patient });
     return;
   }
 
   function onGenderChange(event) {
-    console.log(event.target, event.target.value);
     setGender(event.target.value);
-    patient.gender = gender;
-    setPatient(patient);
+    patient.gender = event.target.value;
+    setPatient({ ...patient });
     return;
   }
 
@@ -55,9 +52,7 @@ export default function PatientForm() {
         value={gender}
         onChange={(event) => handleChange(event)}
       >
-        <option value="M" sele>
-          M
-        </option>
+        <option value="M">M</option>
         <option value="V">V</option>
       </select>
     </>

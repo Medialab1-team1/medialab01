@@ -1,15 +1,15 @@
 import { createContext, useState } from "react";
 
-// Context to provide the data to all components that need it
+// Context to provide the calculated activity data to all components that need it
 
-export const DataContext = createContext();
-export const DataContextProvider = ({ children }) => {
-  const [data, setData] = useState({
+export const DifferenceContext = createContext();
+export const DifferenceContextProvider = ({ children }) => {
+  const [difference, setDifference] = useState({
     head: {
-      // add head sensors here
+      // add head difference here
     },
     body: {
-      // add torso sensors here
+      // add torso difference here
     },
     arms: {
       // divided in a left and right arm
@@ -52,7 +52,7 @@ export const DataContextProvider = ({ children }) => {
         butt: [],
         hip: [],
         knee: {
-          above: [], // [0:'', 1:'', 2:yaw, 3:pitch, 4:roll, 5: 0, 6: 0, 7: diff(yaw), 8:diff(pitch), 9: diff(roll)]
+          above: [],
           below: [],
         },
         ankle: {
@@ -77,14 +77,13 @@ export const DataContextProvider = ({ children }) => {
     },
     meta: {
       id: "",
-      measurementsPerSecond: 32,
       start: 0, // date time string
-      length: 0, // # lines / measurements per second
+      length: 0, // # lines / measurements per second assumed to be 32
     },
   });
   return (
-    <DataContext.Provider value={{ data, setData }}>
+    <DifferenceContext.Provider value={{ difference, setDifference }}>
       {children}
-    </DataContext.Provider>
+    </DifferenceContext.Provider>
   );
 };

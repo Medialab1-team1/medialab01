@@ -10,14 +10,17 @@ import { DataContextProvider } from "./contexts/DataContext";
 import { PatientContextProvider } from "./contexts/PatientContext";
 
 // import components
+import ContextsProvider from "./components/ContextsProvider/ContextsProvider";
 import UploadPopup from "./components/UploadPopup/UploadPopup";
 import DataChecker from "./components/DataChecker/DataChecker";
 import PieChartNeedle from "./components/PieChartNeedle/PieChartNeedle";
 import PatientChecker from "./components/PatientChecker/PatientChecker";
+import GraphBox from "./components/GraphBox/GraphBox";
 import SvgHandler from "./components/SvgHandler";
 
 // import css
 import "./App.css";
+import ActivityChecker from "./components/ActivityChecker/ActivityChecker";
 import GraphBox from "./components/GraphBox/GraphBox";
 
 function App() {

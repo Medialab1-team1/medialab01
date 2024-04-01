@@ -14,21 +14,17 @@ export default function MarkerForm() {
   const [newMarker, setNewMarker] = useState(emptyMarker());
 
   function handleChange(event) {
-    console.log(event.target, event.target.value);
     if (event.target.name === "marker-name") {
       newMarker.name = event.target.value;
-      setNewMarker(newMarker);
-      console.log(newMarker);
+      setNewMarker({ ...newMarker });
     }
     if (event.target.name === "marker-type") {
       newMarker.type = event.target.value;
-      setNewMarker(newMarker);
-      console.log(newMarker);
+      setNewMarker({ ...newMarker });
     }
     if (event.target.name === "marker-time") {
       newMarker.time = event.target.value;
-      setNewMarker(newMarker);
-      console.log(newMarker);
+      setNewMarker({ ...newMarker });
     }
   }
 
@@ -42,14 +38,14 @@ export default function MarkerForm() {
   }
 
   function addMarker(event) {
-    setMarkers(markers.push(newMarker));
+    markers.push(newMarker);
+    setMarkers(markers);
     setNewMarker(emptyMarker());
-    console.log(markers, newMarker);
   }
 
   useEffect(() => {
     newMarker.time = data.meta.start;
-    setNewMarker(newMarker);
+    setNewMarker({ ...newMarker });
   }, [data]);
 
   useEffect(() => {
@@ -69,7 +65,7 @@ export default function MarkerForm() {
       />
       <label htmlFor="marker-time">Tijd</label>
       <input
-        type="datetime-local"
+        type="time"
         name="marker-time"
         id="marker-time"
         value={newMarker.time}

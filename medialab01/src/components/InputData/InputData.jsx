@@ -3,15 +3,19 @@ import clsx from "clsx";
 import Papa from "papaparse";
 
 import { DataContext } from "../../contexts/DataContext";
+import { DifferenceContext } from "../../contexts/DifferenceContext";
+import { ActivityContext } from "../../contexts/ActivityContext";
 
 import styles from "./InputData.module.css";
 
 export default function InputData() {
   const { data, setData } = useContext(DataContext);
+  const { difference, setDifference } = useContext(DifferenceContext);
+  const { activity, setActivity } = useContext(ActivityContext);
 
   const [uploadedBlobs, setUploadedBlobs] = useState([]);
 
-  const [startDate, setStartDate] = useState(getDateString());
+  const [startTime, setStartTime] = useState(getTimeString());
 
   const reader = new FileReader();
 
@@ -22,13 +26,15 @@ export default function InputData() {
       return;
     }
     if (event.target.name === "start-time") {
-      onDateChange(event);
+      onTimeChange(event);
       return;
     }
   }
 
-  function onDateChange(event) {
-    setStartDate(event.target.value);
+  function onTimeChange(event) {
+    setStartTime(event.target.value);
+    data.meta.start = startTime;
+    setData({ ...data });
   }
 
   function onFilesChange(event) {
@@ -60,28 +66,192 @@ export default function InputData() {
     return parsedFile.data;
   }
 
-  function getDateString() {
-    const date = new Date().toISOString();
-    return date.substring(0, date.length - 8);
+  function getTimeString() {
+    const time = new Date().toTimeString();
+    return time.slice(0, 5);
+  }
+
+  function calculateDifference(arr, i) {
+    let diff = [];
+    if (i === 0) {
+      diff = [0, 0, 0, 0, 0];
+    } else {
+      const previousEntry = data.legs.left.knee.above[i - 1];
+      diff = arr.map((v, i) => v - previousEntry[i]);
+    }
+    return diff;
+  }
+
+  function calculateActivity(inputArr) {
+    let averageOutput = { second: [], minute: [], hour: [] };
+    let activities = { second: [], minute: [], hour: [] };
+    // split input into second long sub-arrays
+    let seconds = [];
+    let minutes = [];
+    let hours = [];
+
+    // calculate average per second
+    let i = 0;
+    while (i < inputArr.length) {
+      seconds.push(inputArr.slice(i, (i += data.meta.measurementsPerSecond)));
+    }
+    activities.second = calculateTotalActivity(seconds);
+    averageOutput.second = calculateAvg(activities.second, seconds);
+
+    // calculate per minute
+    i = 0;
+    while (i < inputArr.length) {
+      minutes.push(
+        inputArr.slice(i, (i += data.meta.measurementsPerSecond * 60))
+      );
+    }
+    activities.minute = calculateTotalActivity(minutes);
+    averageOutput.minute = calculateAvg(activities.minute, minutes);
+
+    // calculate per hour
+    i = 0;
+    while (i < inputArr.length) {
+      hours.push(
+        inputArr.slice(i, (i += data.meta.measurementsPerSecond * 60 * 60))
+      );
+    }
+    activities.hour = calculateTotalActivity(hours);
+    averageOutput.hour = calculateAvg(activities.hour, hours);
+
+    return averageOutput;
+
+    // calculate the total activity
+    function calculateTotalActivity(array) {
+      let output = [];
+      array.map((value, i) => {
+        let activity = [0, 0, 0, 0, 0];
+        value.map((measurement, i) => {
+          measurement.map((v, i) => {
+            activity[i] += Math.abs(parseFloat(v));
+          });
+        });
+        output.push(activity);
+      });
+      return output;
+    }
+
+    // average activity
+    function calculateAvg(activity, timeArray) {
+      let average = [];
+      activity.map((value, index) => {
+        let avg = [0, 0, 0, 0, 0];
+        value.map((v, i) => {
+          avg[i] = v / timeArray[index].length;
+        });
+        average.push(avg);
+      });
+      return average;
+    }
+  }
+
+  function categoriseActivity(input) {
+    let categorisedOutput = { second: [], minute: [], hour: [] };
+    // define tresholds if not defined in context
+    if (
+      activity.meta.tresholds.low[3] === 0 &&
+      activity.meta.tresholds.high[3] === 0
+    ) {
+      let all = [[], [], [], [], []];
+
+      input.second.map((second) => {
+        second.map((v, i) => {
+          all[i].push(v);
+        });
+      });
+      all.map((array, i) => {
+        all[i] = array.sort();
+      });
+
+      [activity.meta.tresholds.low[2], activity.meta.tresholds.high[2]] = [
+        all[2][Math.floor(all[2].length * 0.2)],
+        all[2][Math.floor(all[2].length * 0.7)],
+      ];
+      [activity.meta.tresholds.low[3], activity.meta.tresholds.high[3]] = [
+        all[3][Math.floor(all[3].length * 0.2)],
+        all[3][Math.floor(all[3].length * 0.7)],
+      ];
+      [activity.meta.tresholds.low[4], activity.meta.tresholds.high[4]] = [
+        all[4][Math.floor(all[4].length * 0.2)],
+        all[4][Math.floor(all[4].length * 0.7)],
+      ];
+    }
+
+    categorisedOutput.second = assignCategories(input.second);
+    categorisedOutput.minute = assignCategories(input.minute);
+    categorisedOutput.hour = assignCategories(input.hour);
+
+    return categorisedOutput;
+    // run through all averages and assign category based on tresholds
+    function assignCategories(input) {
+      let categorised = [];
+      const tresholds = activity.meta.tresholds;
+
+      input.map((value) => {
+        let cat = [0, 0, 0, 0, 0];
+        value.map((v, i) => {
+          if (i >= 2) {
+            cat[i] = v > tresholds.high[i] ? 2 : v > tresholds.low[i] ? 1 : 0;
+          }
+        });
+        categorised.push(cat);
+      });
+      return categorised;
+    }
   }
 
   useEffect(() => {
     if (uploadedBlobs.length > 0) {
       if (data.legs.left.knee.above.length > 0) {
-        setData((data.legs.left.knee.above = []));
+        data.legs.left.knee.above = [];
+        setData({ ...data });
       }
       for (let blob of uploadedBlobs) {
         data.legs.left.knee.above.push(parseFile(blob));
       }
       data.legs.left.knee.above = data.legs.left.knee.above.flat();
-      setData(data);
+
+      if (data.legs.left.knee.above.length > 0) {
+        // go through all datapoints and calculate differences
+        const differences = data.legs.left.knee.above.map((arr, i) =>
+          calculateDifference(arr, i)
+        );
+        difference.legs.left.knee.above = differences;
+
+        // calculate average activity movement
+        activity.averages.legs.left.knee.above = calculateActivity(
+          difference.legs.left.knee.above
+        );
+
+        //categorise activity
+        activity.categorised.legs.left.knee.above = categoriseActivity(
+          activity.averages.legs.left.knee.above
+        );
+
+        // fill in the meta tags
+        data.meta.length = Math.ceil(data.legs.left.knee.above.length / 32);
+        data.meta.id = crypto.randomUUID();
+        activity.meta = { ...activity.meta, ...data.meta };
+        difference.meta = { ...difference.meta, ...data.meta };
+
+        // set data and activity
+        setData({ ...data });
+        setActivity({ ...activity });
+        setDifference({ ...difference });
+      }
     }
   }, [uploadedBlobs]);
 
+  // apparently this is important, somehow...
   useEffect(() => {
-    data.meta.start = startDate;
-    setData(data);
-  }, [startDate]);
+    data.meta.start = startTime;
+  }, [startTime]);
+
+  // useEffect(() => {}, [data]);
 
   return (
     <>
@@ -102,12 +272,12 @@ export default function InputData() {
         Begintijd van meting
       </label>
       <input
-        type="datetime-local"
+        type="time"
         id="start-time"
         name="start-time"
-        value={startDate && startDate}
-        min="2024-01-01T00:00"
-        max="2424-12-31T23:59"
+        value={startTime ?? "12:00"}
+        min="00:00"
+        max="23:59"
         onChange={(event) => handleChange(event)}
       />
     </>
