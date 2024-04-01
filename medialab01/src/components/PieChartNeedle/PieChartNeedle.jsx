@@ -103,7 +103,7 @@ const PieChartNeedle = () => {
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
-          {value && needle(value, chartData, cx, cy, iR, oR, "#d0d000")}
+          {value && needle(value, chartData, cx, cy, iR, oR, "#ff4500")}
         </PieChart>
       </div>
     </>
