@@ -78,7 +78,7 @@ const PieChartNeedle = () => {
   const averageIntensityMinutes = totalMinutes / filteredMinutes.length;
 
   // Round the average
-  const roundedAverageIntensity = Math.round(averageIntensity);
+  const roundedAverageIntensity = Math.round(averageIntensityMinutes);
 
   const value = roundedAverageIntensity > 0 ? roundedAverageIntensity : 0;
 
