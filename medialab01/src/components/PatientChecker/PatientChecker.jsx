@@ -7,9 +7,7 @@ import styles from "./PatientChecker.module.css";
 
 export default function PatientChecker() {
   const { patient } = useContext(PatientContext);
-  useEffect(() => {
-    console.log(patient);
-  }, [patient]);
+
   return (
     <>
       <div

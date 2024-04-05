@@ -1,14 +1,19 @@
-import React, { useContext } from 'react';
-import { PieChart, Pie, Cell } from 'recharts';
-import { DataContext } from '../../contexts/DataContext';
+import React, { useContext } from "react";
+import { PieChart, Pie, Cell, Label } from "recharts";
+import { DataContext } from "../../contexts/DataContext";
+import styles from "./PieChartNeedle.module.css";
+import clsx from "clsx";
+
+import { ActivityContext } from "../../contexts/ActivityContext";
+import { DifferenceContext } from "../../contexts/DifferenceContext";
 
 const RADIAN = Math.PI / 180;
 const chartData = [
-  { name: 'A', value: 33, color: 'green' },
-  { name: 'B', value: 34, color: 'orange' },
-  { name: 'C', value: 33, color: 'red' },
+  { name: "A", value: 0.2, color: "#ff1717" },
+  { name: "B", value: 0.8, color: "#ffcd17" },
+  { name: "C", value: 1, color: "#2dbf00" },
 ];
-const cx = 150;
+const cx = 200;
 const cy = 200;
 const iR = 50;
 const oR = 100;
@@ -34,35 +39,74 @@ const needle = (value, chartData, cx, cy, iR, oR, color) => {
 
   return [
     <circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
-    <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />,
+    <path
+      d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`}
+      stroke="#none"
+      fill={color}
+    />,
   ];
 };
 
 const PieChartNeedle = () => {
   const { data } = useContext(DataContext);
-  console.log("data" + data)
-  const value = data.legs.left.knee.above.length > 0 ? data.legs.left.knee.above.length : 0; 
+  console.log("data" + data);
+
+  const { activity } = useContext(ActivityContext);
+  const { difference } = useContext(DifferenceContext);
+
+  // Extract the hour array and flatten it
+  const hourArray = activity?.categorised?.legs?.left?.knee?.above?.hour ?? [];
+  const flattenedHours = hourArray.flat().map(Number);
+
+  // Extract the minute array and flatten it
+  const minuteArray =
+    activity?.categorised?.legs?.left?.knee?.above?.minute ?? [];
+  const flattenedMinutes = minuteArray.flat().map(Number);
+
+  // Total of all intensity numbers in minute array
+  const filteredMinutes = flattenedMinutes.slice(2);
+  const totalMinutes = filteredMinutes.reduce((acc, curr) => acc + curr, 0);
+
+  // Remove first 2 as they are always 0 and calculate total intensity
+  const filteredHours = flattenedHours.slice(2);
+  const totalHours = filteredHours.reduce((acc, curr) => acc + curr, 0);
+
+  // Calculate the average intensity level (for hours)
+  const averageIntensity = totalHours / filteredHours.length;
+
+  // Calculate the average intensity level (for minutes)
+  const averageIntensityMinutes = totalMinutes / filteredMinutes.length;
+
+  // Round the average
+  const roundedAverageIntensity = Math.round(averageIntensityMinutes);
+
+  const value = roundedAverageIntensity > 0 ? roundedAverageIntensity : 0;
 
   return (
-    <PieChart width={400} height={500}>
-      <Pie
-        dataKey="value"
-        startAngle={180}
-        endAngle={0}
-        data={chartData}
-        cx={cx}
-        cy={cy}
-        innerRadius={iR}
-        outerRadius={oR}
-        fill="#8884d8"
-        stroke="none"
-      >
-        {chartData.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={entry.color} />
-        ))}
-      </Pie>
-      {value && needle(value, chartData, cx, cy, iR, oR, '#d0d000')}
-    </PieChart>
+    <>
+      <div className={clsx([styles.chartContainer])}>
+        <h1 className={clsx([styles.title])}>Activity Chart</h1>
+        <PieChart width={400} height={300}>
+          <Pie
+            dataKey="value"
+            startAngle={180}
+            endAngle={0}
+            data={chartData}
+            cx={cx}
+            cy={cy}
+            innerRadius={iR}
+            outerRadius={oR}
+            fill="#8884d8"
+            stroke="none"
+          >
+            {chartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
+          {value && needle(value, chartData, cx, cy, iR, oR, "#ff4500")}
+        </PieChart>
+      </div>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ export const PatientContext = createContext();
 
 export const PatientContextProvider = ({ children }) => {
   const [patient, setPatient] = useState({
-    age: 0, // starting age of bracket
+    age: 60, // starting age of bracket
     gender: "M", // unsure if this is needed
     // add other needed info here
     markers: [
