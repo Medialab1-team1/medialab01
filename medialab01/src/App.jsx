@@ -1,6 +1,5 @@
 // import
 import React, { useState } from "react";
-import React, { useState } from "react";
 import { FocusOn } from "react-focus-on";
 import clsx from "clsx";
 
@@ -77,12 +76,13 @@ function App() {
           <div className="App-graph-container">
             <PieChartNeedle />
           </div>
+
           {/* dev stuff down here */}
           {/* just some checkers to check if the contexts are getting updated properly */}
 
-          <ActivityChecker />
-
-          {/* button to bring the popup back */}
+          {/* <DataChecker /> */}
+          {/* <PatientChecker /> */}
+          {/* <ActivityChecker /> */}
 
           {/* Delete dev stuff above */}
         </ContextsProvider>
